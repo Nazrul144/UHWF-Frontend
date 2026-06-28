@@ -1,6 +1,4 @@
 import type { Metadata } from "next";
-import Navbar from "@/shared/Navbar";
-import Footer from "@/shared/Footer";
 import Home from "@/Website/Home/Home";
 
 export const metadata: Metadata = {
@@ -9,14 +7,6 @@ export const metadata: Metadata = {
     "Uttar Char Manob Kalyan Foundation — education, healthcare, disaster relief, and community development in Mehendiganj, Barishal.",
 };
 
-export default function Page() {
-  return (
-    <>
-      <Navbar />
-      <main className="flex-1">
-        <Home />
-      </main>
-      <Footer />
-    </>
-  );
+export default function HomePage() {
+  return <Home />;
 }
