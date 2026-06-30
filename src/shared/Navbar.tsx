@@ -80,17 +80,23 @@ export default function Navbar() {
   return (
     <header className="site-header">
       <nav
-        className="page-container flex min-h-[4rem] items-center justify-between gap-3 py-2 sm:min-h-[4.25rem] lg:grid lg:grid-cols-[1fr_auto_1fr] lg:items-center"
+        className="page-container flex min-h-[4rem] items-center justify-between gap-2 py-2 sm:min-h-[4.25rem]"
         aria-label={t("Main navigation", "প্রধান নেভিগেশন")}
       >
         <Link
           href="/"
-          className="flex shrink-0 items-center rounded-md focus-visible:outline-none lg:justify-self-start"
+          className="flex shrink-0 items-center rounded-md focus-visible:outline-none"
         >
-          <FoundationBrand locale={locale} logoSize="md" priority showTextOnMobile={false} />
+          <FoundationBrand
+            locale={locale}
+            logoSize="md"
+            priority
+            showTextOnMobile={false}
+            className="[&_p:first-child]:text-[20px] sm:[&_p:first-child]:text-[21px] [&_p:last-child]:text-[16px]"
+          />
         </Link>
 
-        <ul className="hidden items-center justify-center gap-0.5 lg:flex">
+        <ul className="hidden flex-1 items-center justify-center gap-0.5 px-1 lg:flex">
           {navLinks.map((link) => (
             <li key={link.href}>
               <Link
@@ -104,13 +110,13 @@ export default function Navbar() {
           ))}
         </ul>
 
-        <div className="flex items-center justify-end gap-2 sm:gap-3 lg:justify-self-end">
+        <div className="flex shrink-0 items-center justify-end gap-1.5 sm:gap-2">
           {mounted && (
             <div className="relative hidden sm:block">
               <button
                 type="button"
                 onClick={() => setLangOpen((o) => !o)}
-                className="flex items-center gap-1.5 rounded-lg px-2 py-2 text-[15px] font-bold text-heading transition hover:bg-primary/5"
+                className="site-nav-glass-btn flex items-center gap-1.5 px-2.5 py-2 text-[17px] font-bold text-heading"
                 aria-expanded={langOpen}
                 aria-haspopup="listbox"
               >
@@ -122,7 +128,7 @@ export default function Navbar() {
               </button>
               {langOpen && (
                 <ul
-                  className="absolute right-0 top-full z-50 mt-1 min-w-[9rem] overflow-hidden rounded-xl bg-card py-1 shadow-lg ring-1 ring-border"
+                  className="site-header__lang-menu absolute right-0 top-full z-50 mt-1.5 min-w-[9rem] overflow-hidden rounded-xl py-1"
                   role="listbox"
                 >
                   <li>
@@ -155,7 +161,7 @@ export default function Navbar() {
           <button
             type="button"
             onClick={toggleTheme}
-            className="hidden rounded-lg p-2 text-muted-foreground transition hover:bg-primary/5 hover:text-primary md:block"
+            className="site-nav-glass-btn hidden p-2.5 text-heading md:block"
             aria-label={theme === "light" ? t("Toggle dark mode", "ডার্ক মোড") : t("Toggle light mode", "লাইট মোড")}
           >
             {theme === "light" ? (
@@ -169,17 +175,23 @@ export default function Navbar() {
             )}
           </button>
 
-          <Link href="/signin" className="site-btn-outline hidden sm:inline-block">
+          <Link
+            href="/signin"
+            className="hidden h-10 items-center justify-center rounded-full border border-primary bg-transparent px-4 text-[1.0625rem] font-bold text-primary transition-all duration-300 ease-in-out hover:bg-primary hover:text-white hover:shadow-[0_0_20px_5px_rgba(45,106,79,0.6)] sm:inline-flex"
+          >
             {t("Sign In", "লগইন")}
           </Link>
 
-          <Link href="/donate" className="site-btn-gradient hidden px-4 py-2.5 text-sm font-bold md:inline-block">
+          <Link
+            href="/donate"
+            className="hidden h-10 items-center justify-center rounded-full border border-primary bg-primary px-4 text-[1.0625rem] font-bold text-white transition-all duration-300 ease-in-out hover:bg-primary hover:text-white hover:shadow-[0_0_20px_5px_rgba(45,106,79,0.6)] sm:inline-flex"
+          >
             {t("Donate", "দান করুন")}
           </Link>
 
           <button
             type="button"
-            className="rounded-lg p-2 text-heading lg:hidden"
+            className="site-nav-glass-btn p-2.5 text-heading lg:hidden"
             onClick={() => setMobileOpen((o) => !o)}
             aria-expanded={mobileOpen}
             aria-controls="mobile-menu"
@@ -199,7 +211,7 @@ export default function Navbar() {
       </nav>
 
       {mobileOpen && (
-        <div id="mobile-menu" className="border-t border-border/50 bg-card/95 px-4 py-4 backdrop-blur-md lg:hidden">
+        <div id="mobile-menu" className="site-header__mobile px-4 py-4 lg:hidden">
           {mounted && (
             <div className="mb-4 flex gap-2 sm:hidden">
               <button
@@ -225,10 +237,10 @@ export default function Navbar() {
                 <Link
                   href={link.href}
                   onClick={() => setMobileOpen(false)}
-                  className={`block rounded-lg px-3 py-3 text-[17px] font-bold ${
+                  className={`block rounded-lg px-3 py-3 text-[19px] font-bold ${
                     isActive(link.href)
-                      ? "bg-primary/10 text-primary"
-                      : "text-muted-foreground hover:bg-muted/40"
+                      ? "bg-primary/12 text-heading"
+                      : "text-heading/80 hover:bg-white/40"
                   }`}
                 >
                   {locale === "bn" ? link.labelBn : link.label}
@@ -239,14 +251,14 @@ export default function Navbar() {
               <Link
                 href="/signin"
                 onClick={() => setMobileOpen(false)}
-                className="site-btn-outline flex-1 py-2.5 text-center"
+                className="inline-flex h-10 flex-1 items-center justify-center rounded-full border border-primary bg-transparent px-3 text-[1.0625rem] font-bold text-primary transition-all duration-300 ease-in-out hover:bg-primary hover:text-white hover:shadow-[0_0_20px_5px_rgba(45,106,79,0.6)]"
               >
                 {t("Sign In", "লগইন")}
               </Link>
               <Link
                 href="/donate"
                 onClick={() => setMobileOpen(false)}
-                className="site-btn-gradient flex-1 py-2.5 text-center text-sm font-bold"
+                className="inline-flex h-10 flex-1 items-center justify-center rounded-full border border-primary bg-primary px-3 text-[1.0625rem] font-bold text-white transition-all duration-300 ease-in-out hover:bg-primary hover:text-white hover:shadow-[0_0_20px_5px_rgba(45,106,79,0.6)]"
               >
                 {t("Donate", "দান করুন")}
               </Link>

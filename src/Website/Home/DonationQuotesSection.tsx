@@ -54,11 +54,17 @@ function DonationQuoteCard({
   );
 }
 
-export default function DonationQuotesSection({ locale }: { locale: AppLocale }) {
+export default function DonationQuotesSection({
+  locale,
+  sectionClass = "bg-muted/40 py-16 sm:py-20",
+}: {
+  locale: AppLocale;
+  sectionClass?: string;
+}) {
   const t = (en: string, bn: string) => (locale === "bn" ? bn : en);
 
   return (
-    <section className="bg-muted/40 py-16 sm:py-20">
+    <section className={sectionClass}>
       <div className="page-container">
         <div className="mb-10 text-center sm:mb-12">
           <span className="section-badge">{t("Charity", "দান")}</span>

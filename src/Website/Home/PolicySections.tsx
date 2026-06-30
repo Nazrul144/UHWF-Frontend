@@ -140,18 +140,22 @@ export function PrinciplesSection({
   title,
   items,
   locale,
+  sectionClass = "page-container py-16 sm:py-20",
 }: {
   title: Bilingual;
   items: Bilingual[];
   locale: AppLocale;
+  sectionClass?: string;
 }) {
   return (
-    <section className="page-container py-16 sm:py-20">
-      <h2 className="section-title mb-8 text-center sm:mb-12">
-        {locale === "bn" ? title.bn : title.en}
-      </h2>
-      <div className="mx-auto max-w-5xl rounded-2xl border border-border bg-muted/40 p-6 sm:p-10">
-        <CheckList items={items} locale={locale} />
+    <section className={sectionClass}>
+      <div className="page-container">
+        <h2 className="section-title mb-8 text-center sm:mb-12">
+          {locale === "bn" ? title.bn : title.en}
+        </h2>
+        <div className="home-card mx-auto max-w-5xl rounded-2xl p-6 sm:p-10">
+          <CheckList items={items} locale={locale} />
+        </div>
       </div>
     </section>
   );
@@ -163,18 +167,21 @@ export function TabbedPolicySection({
   tabs,
   locale,
   defaultTabId,
+  sectionClass = "page-container py-16 sm:py-20",
 }: {
   title: Bilingual;
   subtitle?: Bilingual;
   tabs: ListTab[];
   locale: AppLocale;
   defaultTabId?: string;
+  sectionClass?: string;
 }) {
   const [activeId, setActiveId] = useState(defaultTabId ?? tabs[0]?.id ?? "");
   const activeTab = tabs.find((tab) => tab.id === activeId) ?? tabs[0];
 
   return (
-    <section className="page-container py-16 sm:py-20">
+    <section className={sectionClass}>
+      <div className="page-container">
       <div className="mb-8 text-center sm:mb-12">
         <h2 className="section-title text-primary">
           {locale === "bn" ? title.bn : title.en}
@@ -222,6 +229,7 @@ export function TabbedPolicySection({
             <CheckList items={activeTab?.items ?? []} locale={locale} />
           )}
         </div>
+      </div>
       </div>
     </section>
   );

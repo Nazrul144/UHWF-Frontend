@@ -10,6 +10,8 @@ import {
 } from "@/Website/Home/homePolicyContent";
 import { PrinciplesSection, TabbedPolicySection } from "@/Website/Home/PolicySections";
 import DonationQuotesSection from "@/Website/Home/DonationQuotesSection";
+import { HomeSectionHeader } from "@/Website/Home/HomeSectionHeader";
+import { HeroGlassAmbient } from "@/shared/HeroGlassAmbient";
 
 type StatIconType = "beneficiary" | "projects" | "upazila";
 
@@ -335,35 +337,25 @@ function MissionVisionCard({
   variant,
   title,
   description,
-  badge,
-  icon,
 }: {
   variant: "mission" | "vision";
   title: string;
   description: string;
-  badge: string;
-  icon: ReactNode;
 }) {
   return (
     <article
-      className={`mv-card group ${variant === "mission" ? "mv-card-mission" : "mv-card-vision"}`}
+      className={`mv-glass-card group ${variant === "mission" ? "mv-glass-card--mission" : "mv-glass-card--vision"}`}
     >
-      <div className="relative z-10">
-        <div className="mb-6 flex items-start justify-between gap-4">
-          <div className="mv-card-icon shrink-0 transition group-hover:rotate-0 group-hover:scale-105">
-            {icon}
-          </div>
-          <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-bold tracking-wide text-primary">
-            {badge}
-          </span>
-        </div>
-        <h2 className="subsection-title text-primary">{title}</h2>
-        <p className="body-text mt-4 leading-relaxed">{description}</p>
-        <div
-          className="mt-6 h-1 w-16 rounded-full bg-gradient-to-r from-primary to-transparent"
-          aria-hidden
-        />
-      </div>
+      <h2 className="subsection-title text-heading">{title}</h2>
+      <p className="body-text mt-4 text-[1.0625rem] leading-relaxed text-foreground/85">{description}</p>
+      <div
+        className={`mt-6 h-1 w-20 rounded-full ${
+          variant === "mission"
+            ? "bg-gradient-to-r from-primary to-transparent"
+            : "bg-gradient-to-r from-secondary to-transparent"
+        }`}
+        aria-hidden
+      />
     </article>
   );
 }
@@ -543,12 +535,15 @@ export default function Home() {
   const t = (en: string, bn: string) => (locale === "bn" ? bn : en);
 
   return (
-    <div>
+    <div className="home-page">
       {/* Hero */}
       <section className="hero-soft relative flex min-h-[78vh] flex-col items-center justify-center px-4 pb-20 pt-10 text-center sm:min-h-[82vh] sm:pb-24 sm:pt-12 lg:min-h-[88vh]">
-        <div className="relative z-10 mx-auto w-full max-w-4xl animate-fade-up">
-          <div className="hero-soft__ornament mb-5 text-sm font-semibold tracking-wide">
-            <span>{t("Serving Humanity Since 2025", "২০২৫ থেকে মানবতার সেবায়")}</span>
+        <HeroGlassAmbient />
+        <div className="relative z-10 mx-auto w-full max-w-4xl animate-fade-up px-1">
+          <div className="hero-soft__ornament mb-5 font-semibold tracking-wide">
+            <span className="hero-glass-pill">
+              {t("Serving Humanity Since 2025", "২০২৫ থেকে মানবতার সেবায়")}
+            </span>
           </div>
           <h1 className="page-title text-heading">
             {t(
@@ -562,7 +557,7 @@ export default function Home() {
               "মেহেন্দিগঞ্জ, বরিশাল ভিত্তিক উত্তর চর মানব কল্যাণ ফাউন্ডেশন শিক্ষা, স্বাস্থ্যসেবা, দুর্যোগ ত্রাণ ও সমাজের সব স্তরের মানুষের জীবনযাত্রার মান উন্নয়নে নিবেদিতভাবে কাজ করছে।"
             )}
           </p>
-          <div className="mx-auto mt-8 max-w-2xl rounded-2xl border border-primary/15 bg-card/70 px-6 py-5 shadow-sm backdrop-blur-sm">
+          <div className="hero-glass-quote mx-auto mt-8 max-w-2xl px-6 py-5 sm:px-7 sm:py-6">
             <p className="text-base italic leading-relaxed text-foreground/85 sm:text-lg">
               {t(
                 '"The best of people are those who benefit others." — Prophet Muhammad (peace be upon him)',
@@ -573,13 +568,13 @@ export default function Home() {
           <div className="mt-10 flex flex-wrap items-center justify-center gap-4 sm:gap-5">
             <Link
               href="/donate"
-              className="site-btn-gradient inline-flex min-w-[11rem] items-center justify-center px-8 py-3.5 text-base font-bold"
+              className="inline-flex h-12 w-44 items-center justify-center gap-2 rounded-full border border-primary bg-primary px-3 py-2 text-[1.0625rem] font-bold text-white transition-all duration-300 ease-in-out hover:bg-primary hover:text-white hover:shadow-[0_0_20px_5px_rgba(45,106,79,0.6)]"
             >
               {t("Donate Now", "এখনই দান করুন")}
             </Link>
             <Link
               href="/about-us"
-              className="site-btn-outline inline-flex min-w-[11rem] items-center justify-center bg-card/60 px-8 py-3.5 text-base font-bold backdrop-blur-sm"
+              className="inline-flex h-12 w-44 items-center justify-center gap-2 rounded-full border border-primary bg-transparent px-3 py-2 text-[1.0625rem] font-bold text-primary transition-all duration-300 ease-in-out hover:border-primary hover:bg-primary hover:text-white hover:shadow-[0_0_20px_5px_rgba(45,106,79,0.6)]"
             >
               {t("Learn About Us", "আমাদের জানুন")}
             </Link>
@@ -588,58 +583,44 @@ export default function Home() {
       </section>
 
       {/* Mission & Vision */}
-      <section className="page-container py-16 sm:py-20">
-        <div className="mb-10 text-center sm:mb-12">
-          <h2 className="section-title">
-            {t("Mission & Vision", "লক্ষ্য ও স্বপ্ন")}
-          </h2>
-          <p className="section-subtitle">
-            {t(
+      <section className="home-section home-section--mv">
+        <div className="page-container">
+          <HomeSectionHeader
+            title={t("Mission & Vision", "লক্ষ্য ও স্বপ্ন")}
+            subtitle={t(
               "Our purpose and the future we strive to build together.",
-              "আমাদের উদ্দেশ্য ও যে ভবিষ্যৎ আমরা একসাথে গড়তে চাই।"
+              "আমাদের লক্ষ্য ও উদ্দেশ্য একটি সুন্দর, সুশৃঙ্খল ও মানবিক সমাজ গঠনে নিরলসভাবে কাজ করা।"
             )}
-          </p>
-        </div>
-        <div className="grid gap-8 md:grid-cols-2 md:gap-10 lg:gap-12">
+            ornament="lines"
+          />
+        <div className="grid gap-6 md:grid-cols-2 md:gap-8 lg:gap-10">
           <MissionVisionCard
             variant="mission"
-            badge={t("Mission", "লক্ষ্য")}
             title={t("Our Mission", "আমাদের লক্ষ্য")}
             description={t(
               "To continuously improve lives through sustainable programs in education, healthcare, disaster relief, and livelihood—serving underprivileged communities with compassion and transparency.",
               "শিক্ষা, স্বাস্থ্যসেবা, দুর্যোগ ত্রাণ ও জীবিকায় টেকসই কর্মসূচির মাধ্যমে সুবিধাবঞ্চিত সম্প্রদায়ের জীবনযাত্রার মানোন্নয়নে মানবিকতা ও স্বচ্ছতার সাথে অবিরত কাজ করা।"
             )}
-            icon={
-              <svg className="h-8 w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
-                <circle cx="12" cy="12" r="9" />
-                <circle cx="12" cy="12" r="5" />
-                <circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none" />
-              </svg>
-            }
           />
           <MissionVisionCard
             variant="vision"
-            badge={t("Vision", "স্বপ্ন")}
             title={t("Our Vision", "আমাদের স্বপ্ন")}
             description={t(
               "A humane and prosperous Bangladesh where every family enjoys education, dignified healthcare, and the opportunity to build a self-reliant future.",
-              "এমন একটি সমৃদ্ধ ও মানবিক বাংলাদেশ গড়ার স্বপ্ন, যেখানে প্রতিটি পরিবার শিক্ষা, মর্যাদাপূর্ণ স্বাস্থ্যসেবা ও স্বাবলম্বী ভবিষ্যৎ লাভ করবে।"
+              "এমন একটি সমৃদ্ধ ও মানবিক সমাজ গড়ার স্বপ্ন, যেখানে প্রতিটি সুবিধাবঞ্চিত ব্যক্তি ও পরিবার আর্থিক সেবা, শিক্ষা, মর্যাদাপূর্ণ স্বাস্থ্যসেবা ও স্বাবলম্বী ভবিষ্যৎ লাভ করবে।"
             )}
-            icon={
-              <svg className="h-8 w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
-                <path d="M12 3l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17.8 5.8 22.3l2.4-7.4L2 10.4h7.6L12 3z" strokeLinejoin="round" />
-              </svg>
-            }
           />
+        </div>
         </div>
       </section>
 
       {/* Donation & Charity Quotes */}
-      <DonationQuotesSection locale={locale} />
+      <DonationQuotesSection locale={locale} sectionClass="home-section home-section--alt" />
 
       {/* Principles & Ideals */}
       <PrinciplesSection
         locale={locale}
+        sectionClass="home-section home-section--base"
         title={{ bn: "নীতি ও আদর্শ", en: "Principles & Ideals" }}
         items={principlesItems}
       />
@@ -647,37 +628,33 @@ export default function Home() {
       {/* Goals */}
       <TabbedPolicySection
         locale={locale}
+        sectionClass="home-section home-section--band"
         title={{ bn: "আমাদের লক্ষ্যসমূহ", en: "Our Goals" }}
         tabs={goalsTabs}
         defaultTabId="social-welfare"
       />
 
       {/* Income-Expenditure Policy */}
-      <section className="bg-muted/50">
-        <TabbedPolicySection
-          locale={locale}
-          title={{ bn: "আয়-ব্যয়ের নীতিমালা", en: "Income & Expenditure Policy" }}
-          tabs={financeTabs}
-          defaultTabId="income"
-        />
-      </section>
+      <TabbedPolicySection
+        locale={locale}
+        sectionClass="home-section home-section--alt"
+        title={{ bn: "আয়-ব্যয়ের নীতিমালা", en: "Income & Expenditure Policy" }}
+        tabs={financeTabs}
+        defaultTabId="income"
+      />
 
       {/* Services */}
-      <section className="bg-muted/50 py-16">
+      <section className="home-section home-section--base">
         <div className="page-container">
-          <div className="mb-10 text-center sm:mb-12">
-            <h2 className="section-title">
-              {t("What We Do", "আমরা যা করি")}
-            </h2>
-            <p className="section-subtitle">
-              {t("Programs that create lasting impact", "দীর্ঘস্থায়ী প্রভাব সৃষ্টিকারী কর্মসূচি")}
-            </p>
-          </div>
+          <HomeSectionHeader
+            title={t("What We Do", "আমরা যা করি")}
+            subtitle={t("Programs that create lasting impact", "দীর্ঘস্থায়ী প্রভাব সৃষ্টিকারী কর্মসূচি")}
+          />
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {services.map((service) => (
               <div
                 key={service.title}
-                className="rounded-xl border border-border bg-card p-6 transition hover:shadow-md"
+                className="home-card rounded-xl p-6 hover:-translate-y-1"
               >
                 <span className="text-3xl" aria-hidden>
                   {service.icon}
@@ -695,15 +672,14 @@ export default function Home() {
       </section>
 
       {/* Video */}
-      <section className="page-container py-16 sm:py-20">
-        <div className="mb-10 text-center sm:mb-12">
-          <span className="section-badge">{t("Video", "ভিডিও")}</span>
-          <h2 className="section-title">
-            {t("Video About Our Activities", "আমাদের কার্যক্রম সম্পর্কে ভিডিও")}
-          </h2>
-        </div>
-        <div className="mx-auto max-w-5xl">
-          <div className="relative aspect-video overflow-hidden rounded-3xl border border-border bg-card shadow-lg">
+      <section className="home-section home-section--alt">
+        <div className="page-container">
+          <HomeSectionHeader
+            badge={t("Video", "ভিডিও")}
+            title={t("Video About Our Activities", "আমাদের কার্যক্রম সম্পর্কে ভিডিও")}
+          />
+          <div className="mx-auto max-w-5xl">
+            <div className="home-card relative aspect-video overflow-hidden rounded-3xl">
             {!videoPlaying ? (
               <button
                 type="button"
@@ -745,30 +721,23 @@ export default function Home() {
             )}
           </div>
         </div>
+        </div>
       </section>
 
       {/* Impact Stats */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-muted/60 via-muted/40 to-background py-16 sm:py-24">
+      <section className="home-section home-section--band relative overflow-hidden">
         <div
-          className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-10%,rgba(45,106,79,0.12),transparent)]"
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-10%,color-mix(in_srgb,var(--primary)_12%,transparent),transparent)]"
           aria-hidden
         />
         <div className="page-container relative">
-          <div className="mb-10 text-center sm:mb-12">
-            <h2 className="section-title text-heading">
-              {t("Our Impact", "আমাদের অর্জন")}
-            </h2>
-            <div
-              className="mx-auto mt-3 h-1 w-16 rounded-full bg-gradient-to-r from-transparent via-primary to-transparent"
-              aria-hidden
-            />
-            <p className="section-subtitle mx-auto mt-4 max-w-4xl text-lg leading-relaxed sm:text-xl">
-              {t(
-                "We pledged to stand beside disadvantaged people in every corner of Uttar Char village, Mehendiganj, Barishal — these numbers are the quiet witnesses of that commitment.",
-                "বরিশাল জেলার মেহেন্দিগঞ্জ উপজেলার উত্তর চর গ্রামের প্রতিটি প্রান্তের সুবিধাবঞ্চিত মানুষের পাশে দাঁড়ানোর যে অঙ্গীকার আমরা নিয়েছি — এই সংখ্যাগুলো তারই নীরব সাক্ষী।"
-              )}
-            </p>
-          </div>
+          <HomeSectionHeader
+            title={t("Our Impact", "আমাদের অর্জন")}
+            subtitle={t(
+              "We pledged to stand beside disadvantaged people in every corner of Uttar Char village, Mehendiganj, Barishal — these numbers are the quiet witnesses of that commitment.",
+              "বরিশাল জেলার মেহেন্দিগঞ্জ উপজেলার উত্তর চর গ্রামের প্রতিটি প্রান্তের সুবিধাবঞ্চিত মানুষের পাশে দাঁড়ানোর যে অঙ্গীকার আমরা নিয়েছি — এই সংখ্যাগুলো তারই নীরব সাক্ষী।"
+            )}
+          />
           <div className="mx-auto grid w-full max-w-5xl grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-7 lg:grid-cols-3">
             {impactStats.map((stat, index) => (
               <AnimatedStat key={stat.labelBn} {...stat} index={index} locale={locale} />
@@ -778,16 +747,16 @@ export default function Home() {
       </section>
 
       {/* Testimonials */}
-      <section className="bg-muted/50 py-16">
+      <section className="home-section home-section--base">
         <div className="page-container">
-          <h2 className="section-title mb-10 text-center sm:mb-12">
-            {t("Voices from Our Community", "আমাদের সম্প্রদায়ের কণ্ঠ")}
-          </h2>
+          <HomeSectionHeader
+            title={t("Voices from Our Community", "আমাদের সম্প্রদায়ের কণ্ঠ")}
+          />
           <div className="grid gap-6 md:grid-cols-3">
             {testimonials.map((item) => (
               <blockquote
                 key={item.name}
-                className="rounded-xl border border-border bg-card p-6"
+                className="home-card rounded-xl p-6"
               >
                 <p className="body-text">
                   &ldquo;{item.quote}&rdquo;
@@ -803,18 +772,15 @@ export default function Home() {
       </section>
 
       {/* Join Us */}
-      <section className="page-container py-16 sm:py-20">
-        <div className="mb-10 text-center sm:mb-12">
-          <h2 className="section-title">
-            {t("Join Us", "আমাদের সাথে যুক্ত হোন")}
-          </h2>
-          <p className="section-subtitle">
-            {t(
+      <section className="home-section home-section--alt">
+        <div className="page-container">
+          <HomeSectionHeader
+            title={t("Join Us", "আমাদের সাথে যুক্ত হোন")}
+            subtitle={t(
               "Choose any path below to stand with us in serving those in need.",
               "আপনি পছন্দমতো যেকোনো উপায়ে আমাদের পাশে দাঁড়িয়ে কষ্টার্ত মানুষের সেবায় অংশ নিতে পারেন।"
             )}
-          </p>
-        </div>
+          />
         <div className="mx-auto grid max-w-5xl grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
           {joinOptions.map((option) => (
             <JoinCard
@@ -827,19 +793,13 @@ export default function Home() {
             />
           ))}
         </div>
+        </div>
       </section>
 
       {/* Latest Notices */}
-      <section className="bg-muted/40 py-16 sm:py-20">
+      <section className="home-section home-section--band">
         <div className="page-container">
-          <div className="mb-10 text-center sm:mb-12">
-            <h2 className="section-title text-heading">
-              {t("Latest News & Notices", "সর্বশেষ খবর ও নোটিশ")}
-            </h2>
-            <div
-              className="mx-auto mt-3 h-1 w-16 rounded-full bg-gradient-to-r from-transparent via-primary to-transparent"
-              aria-hidden
-            />
+          <HomeSectionHeader title={t("Latest News & Notices", "সর্বশেষ খবর ও নোটিশ")}>
             <Link
               href="/notice"
               className="mt-4 inline-flex items-center gap-1.5 rounded-full border border-primary/20 bg-card px-5 py-2 text-sm font-bold text-primary shadow-sm transition hover:border-primary/40 hover:bg-primary/5"
@@ -847,7 +807,7 @@ export default function Home() {
               {t("View all notices", "সব নোটিশ দেখুন")}
               <span aria-hidden>→</span>
             </Link>
-          </div>
+          </HomeSectionHeader>
           <div className="mx-auto grid max-w-6xl grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
             {latestNotices.map((notice) => (
               <NoticePreviewCard
@@ -862,14 +822,14 @@ export default function Home() {
       </section>
 
       {/* FAQ */}
-      <section className="bg-muted/50 py-16">
-        <div className="page-container-narrow py-16">
-          <h2 className="section-title mb-8 text-center sm:mb-12">
-            {t("Frequently Asked Questions", "সাধারণ জিজ্ঞাসা")}
-          </h2>
+      <section className="home-section home-section--base">
+        <div className="page-container-narrow">
+          <HomeSectionHeader
+            title={t("Frequently Asked Questions", "সাধারণ জিজ্ঞাসা")}
+          />
           <div className="space-y-2">
             {faqs.map((faq, index) => (
-              <div key={faq.q} className="rounded-lg border border-border bg-card">
+              <div key={faq.q} className="home-faq-item">
                 <button
                   type="button"
                   className="body-text flex w-full items-center justify-between px-4 py-4 text-left"
@@ -893,11 +853,10 @@ export default function Home() {
       </section>
 
       {/* Map */}
-      <section className="page-container py-16">
-        <h2 className="section-title mb-6 text-center sm:mb-10">
-          {t("Find Us", "আমাদের খুঁজুন")}
-        </h2>
-        <div className="overflow-hidden rounded-xl border border-border">
+      <section className="home-section home-section--alt">
+        <div className="page-container">
+          <HomeSectionHeader title={t("Find Us", "আমাদের খুঁজুন")} />
+          <div className="home-card overflow-hidden rounded-xl">
           <iframe
             title={t("UHWF Office Location", "UHWF অফিসের অবস্থান")}
             src="https://www.openstreetmap.org/export/embed.html?bbox=90.38%2C23.85%2C90.42%2C23.88&layer=mapnik&marker=23.865%2C90.399"
@@ -917,10 +876,11 @@ export default function Home() {
             {t("Get directions", "দিকনির্দেশনা পান")}
           </a>
         </p>
+        </div>
       </section>
 
       {/* CTA */}
-      <section className="cta-luxury py-20 sm:py-28">
+      <section className="home-section home-section--band cta-luxury py-20 sm:py-28">
         <div
           className="cta-luxury__bg"
           style={{
